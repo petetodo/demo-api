@@ -12,6 +12,23 @@ node {
     }
   }
   
+  stage('Kubesec') {
+    sh """
+      echo 'Running Kubesec...'
+
+      if curl --silent \
+          --compressed \
+          --connect-timeout 5 \
+          -F file=@deployment.yaml \
+          https://kubesec.io/ | jq --exit-status '.score > 10' >/dev/null; then
+        exit 0;
+      }
+
+      echo 'Application failed kubesec scan'
+      exit 1
+    """'
+  }
+  
   stage('Scan') {
     withCredentials([
         string(credentialsId: 'microscanner-token',
