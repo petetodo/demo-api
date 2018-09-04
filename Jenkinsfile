@@ -26,7 +26,7 @@ node {
 
       echo 'Application failed kubesec scan'
       exit 1
-    """'
+    """
   }
   
   stage('Scan') {
