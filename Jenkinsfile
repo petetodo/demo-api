@@ -22,7 +22,7 @@ node {
           -F file=@deployment.yaml \
           https://kubesec.io/ | jq --exit-status '.score > 10' >/dev/null; then
         exit 0;
-      }
+      fi
 
       echo 'Application failed kubesec scan'
       exit 1
